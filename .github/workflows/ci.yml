@@ -37,5 +37,4 @@ jobs:
         with:
           commit_user_name: "GH Actions CI Bot"
           commit_message: "CI: Build"
-          file_pattern: dist/**/*
-          # commit_options: '--all'
+          commit_options: '--all'
