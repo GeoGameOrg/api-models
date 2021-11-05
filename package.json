@@ -1,0 +1,21 @@
+{
+  "name": "api-models",
+  "version": "1.0.0",
+  "description": "GeoGame Socket Models",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsc --project ./tsconfig.json"
+  },
+  "dependencies": {
+    "typescript": "^4.4.4",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "@types/uuid": "^8.3.1"
+  }
+}
