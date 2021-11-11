@@ -1,4 +1,4 @@
-import { Player, Players
+import { GameEventResponse, Player, Players
  } from "."
 export enum GamePhase {
 	Lobby,
@@ -13,9 +13,12 @@ export enum GameMode {
 
 export namespace SomeGame {
 	
-	export class Game {}
+	export interface Game {
+		gameMode: GameMode
+	}
+
 	export interface GameEvent {
-		eventType: string
+		type: string
 	}
 
 	/**
@@ -34,10 +37,16 @@ export namespace SomeGame {
 	/**
 	 * State of the Game (Combines, Player, Team, etc States)
 	 */
-	export interface GameState {
-		gameMode: GameMode
+	export class GameState {
 		game: Game
 		players: { [player: string]: PlayerState };
+
+		constructor(game: Game, players: { [player: string]: PlayerState }) {
+			this.game = game
+			this.players = players
+		}
+
+		handleEvent(event: GameEvent) {}
 	}
 }
 
@@ -45,7 +54,9 @@ export namespace SomeGame {
 
 
 export namespace RallyGame {
-	export class Game extends SomeGame.Game {}
+	export class Game implements SomeGame.Game {
+		gameMode: GameMode = GameMode.RallyGame
+	}
 
 	/**
 	 * Role of a Player inside a team
@@ -54,6 +65,14 @@ export namespace RallyGame {
 		Driver,
 		Navigator,
 		Unassigned
+	}
+
+	/**
+	 * State of a Team in a Game
+	 */
+	 export class TeamState implements SomeGame.State {
+		updatedAt: Date = new Date()
+		// checkedPoints: 
 	}
 	
 	/**
@@ -81,14 +100,18 @@ export namespace RallyGame {
 		}
 	}
 
-	/**
-	 * State of a Team in a Game
-	 */
-	export class TeamState implements SomeGame.State {
-		updatedAt: Date = new Date()
-		// checkedPoints: 
+	export enum  GameEventType {
+		something = "something",
+		Sync = "sync"
 	}
 
+	export class GameEvent implements SomeGame.GameEvent {
+		type: GameEventType
+
+		constructor(type: GameEventType) {
+			this.type = type
+		}
+	}
 	
 	/**
 	 * State of the Game (Combines, Player, Team, etc States)
@@ -101,6 +124,17 @@ export namespace RallyGame {
 
 		constructor(game: RallyGame.Game) {
 			this.game = game
+		}
+
+		//MARK: Should return instructions on what to update
+		handleEvent(event: GameEvent): void {
+			switch (event.type) {
+				case GameEventType.Sync:
+					console.log("Sync Event was triggered")
+					break;
+				default:
+					throw new Error("Method not implemented.");
+			}
 		}
 	}
 }
