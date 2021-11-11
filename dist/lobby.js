@@ -2,16 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Lobby = void 0;
 const game_1 = require("./game");
-const uuid_1 = require("uuid");
 class Lobby {
-    constructor(id, players, gamePhase, settings) {
-        this.id = id !== null && id !== void 0 ? id : (0, uuid_1.v4)();
+    constructor(id, players, gamePhase, game) {
+        this.id = id;
         this.players = players;
         this.gamePhase = gamePhase;
-        this.settings = settings;
+        this.game = game;
     }
-    static withHost(hostPlayer, id) {
-        return new Lobby(id, [hostPlayer], game_1.GamePhase.Lobby, {});
+    static withHost(hostPlayer, id, game) {
+        return new Lobby(id, [hostPlayer], game_1.GamePhase.Lobby, game);
     }
 }
 exports.Lobby = Lobby;

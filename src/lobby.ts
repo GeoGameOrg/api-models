@@ -1,6 +1,5 @@
 import { Player } from "./player";
-import { GamePhase } from "./game";
-import { v4 as uuidv4 } from "uuid";
+import { SomeGame, GamePhase } from "./game";
 
 
 
@@ -8,17 +7,17 @@ class Lobby {
 	id: string
 	players: Player[];
 	gamePhase: GamePhase;
-	settings: { [key: string]: any };
+	game: SomeGame.Game
 
-	constructor(id: string | null, players: Player[], gamePhase: GamePhase, settings: { [key: string]: any }) {
-		this.id = id ?? uuidv4()
+	constructor(id: string, players: Player[], gamePhase: GamePhase, game: SomeGame.Game) {
+		this.id = id
 		this.players = players
 		this.gamePhase = gamePhase
-		this.settings = settings
+		this.game = game
 	}
 
-	static withHost(hostPlayer: Player, id: string): Lobby {
-		return new Lobby(id, [hostPlayer], GamePhase.Lobby, {})
+	static withHost(hostPlayer: Player, id: string, game: SomeGame.Game): Lobby {
+		return new Lobby(id, [hostPlayer], GamePhase.Lobby, game)
 	}
 }
 
