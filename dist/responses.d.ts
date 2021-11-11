@@ -1,3 +1,4 @@
+import { SomeGame } from ".";
 import { Lobby } from "./lobby";
 declare type Response = {
     success: boolean;
@@ -31,5 +32,9 @@ export declare class CreateLobbyResponse extends SomeResponse<Lobby> {
  * Response Type for "joinLobby"
  */
 export declare class JoinLobbyResponse extends CreateLobbyResponse {
+}
+export declare class GameEventResponse extends SomeResponse<SomeGame.GameState> {
+    static failure(reason: string): GameEventResponse;
+    static success(gameState: SomeGame.GameState): GameEventResponse;
 }
 export {};

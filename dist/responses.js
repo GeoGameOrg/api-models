@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JoinLobbyResponse = exports.CreateLobbyResponse = exports.RegisterIdResponse = void 0;
+exports.GameEventResponse = exports.JoinLobbyResponse = exports.CreateLobbyResponse = exports.RegisterIdResponse = void 0;
 class SomeResponse {
     constructor(success, data, error) {
         this.success = success;
@@ -41,3 +41,12 @@ exports.CreateLobbyResponse = CreateLobbyResponse;
 class JoinLobbyResponse extends CreateLobbyResponse {
 }
 exports.JoinLobbyResponse = JoinLobbyResponse;
+class GameEventResponse extends SomeResponse {
+    static failure(reason) {
+        return new GameEventResponse(false, null, reason);
+    }
+    static success(gameState) {
+        return new GameEventResponse(true, gameState, null);
+    }
+}
+exports.GameEventResponse = GameEventResponse;

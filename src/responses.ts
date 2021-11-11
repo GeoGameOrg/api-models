@@ -1,3 +1,4 @@
+import { SomeGame } from "."
 import { Lobby } from "./lobby"
 
 type Response = {
@@ -52,3 +53,14 @@ export class CreateLobbyResponse extends SomeResponse<Lobby> {
  * Response Type for "joinLobby"
  */
 export class JoinLobbyResponse extends CreateLobbyResponse { }
+
+
+export class GameEventResponse extends SomeResponse<SomeGame.GameState> {
+	static failure(reason: string): GameEventResponse {
+		return new GameEventResponse(false, null, reason)
+	}
+
+	static success(gameState: SomeGame.GameState): GameEventResponse {
+		return new GameEventResponse(true, gameState, null)
+	}
+}

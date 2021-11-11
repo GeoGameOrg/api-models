@@ -10,6 +10,9 @@ export declare enum GameMode {
 export declare namespace SomeGame {
     class Game {
     }
+    interface GameEvent {
+        eventType: string;
+    }
     /**
      * Base Interface for States
      */
@@ -24,7 +27,7 @@ export declare namespace SomeGame {
     /**
      * State of the Game (Combines, Player, Team, etc States)
      */
-    interface GameState<Game, PlayerState> {
+    interface GameState {
         gameMode: GameMode;
         game: Game;
         players: {
@@ -63,7 +66,7 @@ export declare namespace RallyGame {
     /**
      * State of the Game (Combines, Player, Team, etc States)
      */
-    class GameState implements SomeGame.GameState<Game, PlayerState> {
+    class GameState implements SomeGame.GameState {
         gameMode: GameMode;
         game: Game;
         players: {
