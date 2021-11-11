@@ -8,10 +8,11 @@ export declare enum GameMode {
     None = 1
 }
 export declare namespace SomeGame {
-    class Game {
+    interface Game {
+        gameMode: GameMode;
     }
     interface GameEvent {
-        eventType: string;
+        type: string;
     }
     /**
      * Base Interface for States
@@ -27,16 +28,20 @@ export declare namespace SomeGame {
     /**
      * State of the Game (Combines, Player, Team, etc States)
      */
-    interface GameState {
-        gameMode: GameMode;
+    class GameState {
         game: Game;
         players: {
             [player: string]: PlayerState;
         };
+        constructor(game: Game, players: {
+            [player: string]: PlayerState;
+        });
+        handleEvent(event: GameEvent): void;
     }
 }
 export declare namespace RallyGame {
-    class Game extends SomeGame.Game {
+    class Game implements SomeGame.Game {
+        gameMode: GameMode;
     }
     /**
      * Role of a Player inside a team
@@ -45,6 +50,12 @@ export declare namespace RallyGame {
         Driver = 0,
         Navigator = 1,
         Unassigned = 2
+    }
+    /**
+     * State of a Team in a Game
+     */
+    class TeamState implements SomeGame.State {
+        updatedAt: Date;
     }
     /**
      * State of a Player in a Game
@@ -57,11 +68,13 @@ export declare namespace RallyGame {
         updateTeam(teamId: string): void;
         updateRole(role: TeamRole): void;
     }
-    /**
-     * State of a Team in a Game
-     */
-    class TeamState implements SomeGame.State {
-        updatedAt: Date;
+    enum GameEventType {
+        something = "something",
+        Sync = "sync"
+    }
+    class GameEvent implements SomeGame.GameEvent {
+        type: GameEventType;
+        constructor(type: GameEventType);
     }
     /**
      * State of the Game (Combines, Player, Team, etc States)
@@ -76,5 +89,6 @@ export declare namespace RallyGame {
             [teamId: string]: TeamState;
         };
         constructor(game: RallyGame.Game);
+        handleEvent(event: GameEvent): void;
     }
 }

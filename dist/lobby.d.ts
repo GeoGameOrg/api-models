@@ -4,9 +4,9 @@ declare class Lobby {
     id: string;
     players: Player[];
     gamePhase: GamePhase;
-    game: SomeGame.Game;
-    constructor(id: string, players: Player[], gamePhase: GamePhase, game: SomeGame.Game);
-    static withHost(hostPlayer: Player, id: string, game: SomeGame.Game): Lobby;
+    game: SomeGame.GameState;
+    constructor(id: string, players: Player[], gamePhase: GamePhase, game: SomeGame.GameState);
+    static withHost(hostPlayer: Player, id: string, game: SomeGame.GameState): Lobby;
 }
 interface Lobbies {
     [key: string]: Lobby;
