@@ -14,3 +14,4 @@ __exportStar(require("./player"), exports);
 __exportStar(require("./responses"), exports);
 __exportStar(require("./lobby"), exports);
 __exportStar(require("./game"), exports);
+__exportStar(require("./games/rallyGame"), exports);
