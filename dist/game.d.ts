@@ -1,3 +1,4 @@
+import { GameEventResponse, Player } from ".";
 export declare enum GamePhase {
     Lobby = 0,
     Ingame = 1,
@@ -21,74 +22,16 @@ export declare namespace SomeGame {
         updatedAt: Date;
     }
     /**
-     * State of a Player in a Game
-     */
-    interface PlayerState extends State {
-    }
-    /**
      * State of the Game (Combines, Player, Team, etc States)
      */
     class GameState {
         game: Game;
         players: {
-            [player: string]: PlayerState;
+            [player: string]: Player;
         };
         constructor(game: Game, players: {
-            [player: string]: PlayerState;
+            [player: string]: Player;
         });
-        handleEvent(event: GameEvent): void;
-    }
-}
-export declare namespace RallyGame {
-    class Game implements SomeGame.Game {
-        gameMode: GameMode;
-    }
-    /**
-     * Role of a Player inside a team
-     */
-    enum TeamRole {
-        Driver = 0,
-        Navigator = 1,
-        Unassigned = 2
-    }
-    /**
-     * State of a Team in a Game
-     */
-    class TeamState implements SomeGame.State {
-        updatedAt: Date;
-    }
-    /**
-     * State of a Player in a Game
-     */
-    class PlayerState implements SomeGame.PlayerState {
-        updatedAt: Date;
-        teamId: string;
-        role: TeamRole;
-        constructor(teamId: string);
-        updateTeam(teamId: string): void;
-        updateRole(role: TeamRole): void;
-    }
-    enum GameEventType {
-        something = "something",
-        Sync = "sync"
-    }
-    class GameEvent implements SomeGame.GameEvent {
-        type: GameEventType;
-        constructor(type: GameEventType);
-    }
-    /**
-     * State of the Game (Combines, Player, Team, etc States)
-     */
-    class GameState implements SomeGame.GameState {
-        gameMode: GameMode;
-        game: Game;
-        players: {
-            [playerId: string]: PlayerState;
-        };
-        teams: {
-            [teamId: string]: TeamState;
-        };
-        constructor(game: RallyGame.Game);
-        handleEvent(event: GameEvent): void;
+        handleEvent(playerId: string, event: GameEvent, callback: (response: GameEventResponse) => void): void;
     }
 }
